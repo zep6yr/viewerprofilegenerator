@@ -9,4 +9,4 @@ CardboardDevice.js: CardboardDevice.proto
 	npx pbjs -t static-module -w commonjs -o $@ $^
 
 CardboardDevice.proto:
-	curl -o $@ https://raw.githubusercontent.com/google/wwgc/master/www/CardboardDevice.proto
+	curl -s -o $@ https://raw.githubusercontent.com/google/wwgc/master/www/CardboardDevice.proto
