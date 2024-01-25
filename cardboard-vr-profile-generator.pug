@@ -1,0 +1,135 @@
+mixin form_input(id, name, type, help)
+  .field
+    if(name)
+      label.label(for=id)= name
+    .control
+      if(block)
+        block
+      else
+        input.input(id=id type=type name=id placeholder=name)&attributes(attributes)
+    if (help)
+      p.help= help
+- var github = "https://github.com/zep6yr/viewerprofilegenerator";
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name="description" content="Create a Cardboard VR Viewer Profile QR-Code with this Generator. This is a replacement for the dysfunctional wwgc viewerprofilegenerator.")
+  meta(name="keywords" content="Cardboard VR, VR Profile Viewer, Cardboard VR Viewer Generator, wwgc, viewerprofilegenerator")
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  // link(rel='stylesheet' href='./index.sass')
+  style(rel='stylesheet').
+    @import "./index.sass";
+  //script(type='module' src='./index.ts')
+  script(type='module').
+    import "./index.ts";
+  title Cardboard VR Viewer Profile Generator
+
+.container
+  nav.navbar(role='navigation' aria-label='main navigation')
+    .navbar-brand
+      a.navbar-burger(role='button' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample')
+        span(aria-hidden='true')
+        span(aria-hidden='true')
+        span(aria-hidden='true')
+    #navbarBasicExample.navbar-menu
+      .navbar-start
+      .navbar-end
+        .navbar-item
+          .buttons
+            a.button(href=github target="_blank")
+              | Github
+
+section.section
+  .container
+    h1.title Cardboard VR Configuration Web App
+    h2.subtitle Viewer Profile QR-Code Generator
+    p
+    | More information on entering the physical viewer parameters can be found on 
+    a(href="https://support.google.com/cardboard/manufacturers/answer/6324808" target="_blank") Google Help
+    | .
+    br
+    br
+    .columns
+      .column
+        form#deviceConfigForm
+          .columns
+            .column
+              +form_input('vendor', 'Vendor', 'text')
+            .column
+              +form_input('model', 'Model', 'text')
+          .columns
+            .column
+              +form_input('screenToLensDistance', 'Screen to Lens Distance [mm]', 'number', null)(step='0.1')
+            .column
+              +form_input('interLensDistance', 'Inter Lens Distance [mm]', 'number')(step='0.1')
+          +form_input('leftEyeFieldOfViewAngles[]', 'Left Eye Field of View Angles', 'number')
+            .columns
+              .column
+                input.input(id='leftEyeFieldOfViewAngles[0]' type='number' name='leftEyeFieldOfViewAngles[]')
+              .column
+                input.input(id='leftEyeFieldOfViewAngles[1]' type='number' name='leftEyeFieldOfViewAngles[]')
+              .column
+                input.input(id='leftEyeFieldOfViewAngles[2]' type='number' name='leftEyeFieldOfViewAngles[]')
+              .column
+                input.input(id='leftEyeFieldOfViewAngles[3]' type='number' name='leftEyeFieldOfViewAngles[]')
+          +form_input('trayToLensDistance', 'Tray to Lens Distance [mm]', 'number')(step='0.1')
+          +form_input('distortionCoefficients[]', 'Distortion Coefficients', 'number')
+            .columns
+              .column
+                input.input(id='distortionCoefficients[0]' type='number' name='distortionCoefficients[]' step='0.001')
+              .column
+                input.input(id='distortionCoefficients[1]' type='number' name='distortionCoefficients[]' step='0.001')
+          .columns
+            .column
+              +form_input('hasMagnet', null, 'checkbox')
+                label.checkbox
+                  input#has_magnet(type="checkbox" name="hasMagnet")
+                  |  Has Magnet
+            .column
+              +form_input('primaryButton', 'Primary Button', 'select')
+                .select
+                  select#primaryButton.select(name='primaryButton')
+                    option(value='0') NONE
+                    option(value='1') MAGNET
+                    option(value='2') TOUCH
+                    option(value='3') INDIRECT_TOUCH
+            .column
+              +form_input('verticalAlignment', 'Vertical Alignment', 'number')
+                .select
+                  select#verticalAlignment(name='verticalAlignment')
+                    option(value='0') BOTTOM
+                    option(value='1') CENTER
+                    option(value='2') TOP
+      .column
+        canvas#canvas(alt="Cardboard VR Profile Viewer QR-Code" title="Cardboard VR Profile Viewer QR-Code")
+        .has-text-centered
+          png-download-link#png-download-link
+           a#link(title="Download Cardboard VR Profile Viewer QR-Code as a PNG File") ...
+        
+    p
+    | This Cardboard VR Viewer Profile QR-Code Generator was created because 
+    a(href="https://arvr.google.com/cardboard/viewerprofilegenerator/" target="_blank") Google's wwgc viewerprofilegenerator
+    |  is broken. This is a replacement for the dysfunctional 
+    a(href="https://arvr.google.com/cardboard/viewerprofilegenerator/" target="_blank") Google's wwgc viewerprofilegenerator 
+    | to make existing devices still useful if the QR code is lost or does not work anymore. You can recreate the QR-Code for your Cardboard VR Viewer. The generated QR-Code can be scanned by the Cardboard VR App.
+    | This Web App is designed to work offline and can be saved locally as a single HTML file.
+footer.footer
+  .content.has-text-centered
+    p
+      | © 2024 Cardboard Viewer Profile Generator. Released under the 
+      a(href='http://opensource.org/licenses/mit-license.php' target="_blank") MIT 
+      | License. View on 
+      a(href=github target="_blank") GitHub
+      | . 
+      | This website was build with 
+      a(href='https://bulma.io/' target="_blank") Bulma
+      | , 
+      a(href='https://pugjs.org/' target="_blank") Pug
+      | , 
+      a(href='https://sass-lang.com/' target="_blank") SASS
+      | , 
+      a(href='https://www.typescriptlang.org/' target="_blank") Typescript 
+      | and 
+      a(href='https://parceljs.org/' target="_blank") Parcel
+      | . 
+      | This is not an official Google product.

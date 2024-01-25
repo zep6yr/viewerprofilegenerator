@@ -1,0 +1,6 @@
+.parcel-cache/
+dist/
+_site/
+node_modules/
+parcel-bundle-reports/
+CardboardDevice.*
