@@ -22,7 +22,9 @@ jobs:
         run: npm ci
         
       - name: Build
-        run: npx parcel build --dist-dir _site
+        run: |
+          make CardboardDevice.d.ts
+          npx parcel build --dist-dir _site
         
       - name: Fix permissions
         run: |
